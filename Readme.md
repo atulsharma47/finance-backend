@@ -1,38 +1,98 @@
 # 📊 Finance Backend API
 
-## 🚀 Overview
+## 🚀 Live Project
 
-A **Node.js + Express backend system** for managing financial records with:
-
-* 🔐 JWT Authentication
-* 👥 Role-based access control
-* 📊 Financial analytics dashboard
-* 🔍 Filtering, search, and pagination
-* 🗑 Soft delete for data safety
-* 🧪 Unit testing using Jest
+* 🌐 **Live API:** https://finance-backend-3ycy.onrender.com/
+* 💻 **GitHub Repo:** https://github.com/atulsharma47/finance-backend
 
 ---
 
-## 🧠 Key Features
+## 📌 Overview
 
-* User management with roles (Admin, Analyst, Viewer)
-* Secure API access using JWT
-* Full CRUD operations for financial records
-* Advanced querying (filter + search + pagination)
-* Dashboard with aggregated insights
-* Monthly trends analysis
-* Soft delete implementation
-* Automated API testing
+This project is a **Finance Backend System** built using **Node.js, Express, and MongoDB**.
+
+It provides a complete backend solution for managing financial records such as income and expenses, with secure access using JWT authentication and role-based authorization.
 
 ---
 
-## 🔐 Authentication
+## 🎯 Key Features
+
+### 🔐 Authentication & Authorization
+
+* JWT-based authentication
+* Role-based access control (Admin, Analyst, Viewer)
+* Protected routes using middleware
+
+---
+
+### 👤 User Management
+
+* Create users
+* Assign roles
+* Update and delete users
+* Manage user status (active/inactive)
+
+---
+
+### 💰 Financial Records
+
+* Create, read, update, delete records
+* Each record contains:
+
+  * amount
+  * type (income/expense)
+  * category
+  * date
+  * notes
+
+---
+
+### 🔍 Advanced Query Features
+
+* Filtering (type, category, date)
+* Search (category & notes)
+* Pagination (`page`, `limit`)
+* User-specific data access
+
+---
+
+### 📊 Dashboard & Analytics
+
+* Total income
+* Total expense
+* Net balance
+* Category-wise totals
+* Recent activity
+* Monthly trends
+
+---
+
+### 🗑 Soft Delete
+
+* Records are not permanently deleted
+* Marked using `isDeleted = true`
+* Prevents accidental data loss
+
+---
+
+### 🧪 Testing
+
+* Unit testing using **Jest + Supertest**
+* Tested:
+
+  * Create record
+  * Get records
+* Includes proper DB connection cleanup
+
+---
+
+## 🔐 Authentication Flow
 
 ### Login
 
 POST `/api/users/login`
 
-```json id="a1"
+```json
 {
   "email": "atul@gmail.com"
 }
@@ -40,130 +100,73 @@ POST `/api/users/login`
 
 ### Response
 
-```json id="a2"
+```json
 {
+  "message": "Login successful",
   "token": "JWT_TOKEN"
 }
 ```
 
 ### Usage
 
-```http id="a3"
+```http
 Authorization: Bearer JWT_TOKEN
 ```
 
 ---
 
-## 👤 User APIs
+## 📡 API Endpoints
+
+### 👤 User Routes
 
 | Method | Endpoint         | Description |
 | ------ | ---------------- | ----------- |
 | POST   | /api/users       | Create user |
-| POST   | /api/users/login | Login user  |
+| POST   | /api/users/login | Login       |
 | GET    | /api/users       | Get users   |
 | PUT    | /api/users/:id   | Update user |
 | DELETE | /api/users/:id   | Delete user |
 
 ---
 
-## 💰 Record APIs
+### 💰 Record Routes
 
-### Create Record (Admin)
+| Method | Endpoint         | Description   |
+| ------ | ---------------- | ------------- |
+| POST   | /api/records     | Create record |
+| GET    | /api/records     | Get records   |
+| PUT    | /api/records/:id | Update record |
+| DELETE | /api/records/:id | Soft delete   |
 
-POST `/api/records`
+---
 
-### Get Records
+### 📊 Dashboard APIs
 
-GET `/api/records`
+| Endpoint                 | Description       |
+| ------------------------ | ----------------- |
+| GET /api/records/summary | Summary analytics |
+| GET /api/records/trends  | Monthly trends    |
 
-#### Query Params:
+---
 
-* `type`
-* `category`
-* `search`
-* `startDate`
-* `endDate`
-* `page`
-* `limit`
+## 🔍 Query Examples
 
-Example:
+### Pagination
 
-```http id="a4"
-/api/records?search=food&page=1&limit=2
+```http
+/api/records?page=1&limit=2
 ```
 
----
+### Search
 
-### Update Record
-
-PUT `/api/records/:id`
-
----
-
-### Delete Record (Soft Delete)
-
-DELETE `/api/records/:id`
-
----
-
-## 📊 Dashboard APIs
-
-### Summary
-
-GET `/api/records/summary`
-
-Includes:
-
-* Total income
-* Total expense
-* Balance
-* Category totals
-* Recent activity
-
----
-
-### Monthly Trends
-
-GET `/api/records/trends`
-
----
-
-## 🔍 Advanced Features
-
-### ✔ Filtering
-
-Filter by type, category, and date
-
-### ✔ Pagination
-
-```http id="a5"
-?page=1&limit=5
+```http
+/api/records?search=food
 ```
 
-### ✔ Search
+### Filtering
 
-```http id="a6"
-?search=salary
-```
-
-### ✔ Soft Delete
-
-* Records are not permanently deleted
-* Stored with `isDeleted = true`
-
----
-
-## 🧪 Testing
-
-Implemented using:
-
-* Jest
-* Supertest
-
-Run tests:
-
-```bash id="a7"
-npm test
+```http
+/api/records?type=income&category=salary
 ```
 
 ---
@@ -175,44 +178,64 @@ npm test
 * MongoDB Atlas
 * Mongoose
 * JSON Web Token (JWT)
-* Jest + Supertest
+* Jest & Supertest
+
+---
+
+## ⚙️ Environment Variables
+
+Create a `.env` file:
+
+```env
+MONGO_URI=your_mongodb_connection_string
+```
 
 ---
 
 ## ▶️ Run Locally
 
-```bash id="a8"
+```bash
 npm install
 npx nodemon server.js
 ```
 
 ---
 
-## ⚠️ Environment Variables
+## 🚀 Deployment
 
-Create `.env` file:
+This project is deployed on **Render**.
 
-```env id="a9"
-MONGO_URI=your_mongodb_connection_string
-```
+Steps followed:
+
+* Connected GitHub repository
+* Configured environment variables
+* Deployed Node.js service
+* Connected MongoDB Atlas
 
 ---
 
 ## 📈 Project Highlights
 
-* Clean architecture
-* Secure authentication
+* Full backend architecture
+* Secure authentication system
 * Scalable API design
-* Real-world backend practices
-* Fully tested endpoints
+* Real-world features (pagination, search, analytics)
+* Clean and modular code structure
+* Fully deployed and tested
 
 ---
 
-## 🚀 Future Improvements
+## 🔮 Future Improvements
 
-* API documentation with Swagger
+* Swagger API documentation
 * Rate limiting
-* Deployment (Render / Railway)
 * Frontend integration
+* Role-based dashboards
+
+---
+
+## 🏁 Conclusion
+
+This project demonstrates a **production-ready backend system** with real-world features, security, and scalability.
 
 ---
